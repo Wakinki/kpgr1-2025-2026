@@ -3,6 +3,9 @@ package rasterize;
 import model.Line;
 import raster.RasterBufferedImage;
 
+/**
+ * Implementace rasterizátoru úseček pomocí Bresenhamova algoritmu.
+ */
 public class LineRasterizerBresenham extends LineRasterizer {
     public LineRasterizerBresenham(RasterBufferedImage raster) {
         super(raster);

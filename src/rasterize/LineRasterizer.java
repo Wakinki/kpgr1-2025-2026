@@ -3,6 +3,8 @@ package rasterize;
 import model.Line;
 import raster.RasterBufferedImage;
 
+import java.awt.*;
+
 public abstract class LineRasterizer {
     protected RasterBufferedImage raster;
 

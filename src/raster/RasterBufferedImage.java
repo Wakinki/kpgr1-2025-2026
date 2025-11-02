@@ -5,21 +5,26 @@ import java.awt.image.BufferedImage;
 
 public class RasterBufferedImage implements Raster {
 
-    private BufferedImage image;
+    private final BufferedImage image;
+    private int backgroundColor = 0xffffff;
 
     public RasterBufferedImage(int width, int height) {
         image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        clear();
     }
 
     @Override
     public void setPixel(int x, int y, int color) {
-        // TODO: ošetřit zápis mimo raster
-        image.setRGB(x, y, color);
+        if (x >= 0 && x < image.getWidth() && y >= 0 && y < image.getHeight()) {
+            image.setRGB(x, y, color);
+        }
     }
 
     @Override
     public int getPixel(int x, int y) {
-        // TODO: druhá úloha
+        if (x >= 0 && x < image.getWidth() && y >= 0 && y < image.getHeight()) {
+            return image.getRGB(x, y);
+        }
         return 0;
     }
 
@@ -36,10 +41,20 @@ public class RasterBufferedImage implements Raster {
     @Override
     public void clear() {
         Graphics g = image.getGraphics();
-        g.clearRect(0, 0, image.getWidth(), image.getHeight());
+        g.setColor(new Color(backgroundColor));
+        g.fillRect(0, 0, image.getWidth(), image.getHeight());
+        g.dispose();
     }
 
     public BufferedImage getImage() {
         return image;
+    }
+
+    public void setBackgroundColor(int color) {
+        this.backgroundColor = color;
+    }
+
+    public int getBackgroundColor() {
+        return backgroundColor;
     }
 }
