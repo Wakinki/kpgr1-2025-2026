@@ -66,26 +66,6 @@ public class Controller2D {
         }
     }
 
-    public void drawScene() {
-        panel.getRaster().clear();
-
-        // redraw all saved data
-        for (Line l : lines) {
-            lineRasterizer.rasterize(l);
-        }
-
-        for (Polygon p : polygons) {
-            polygonRasterizer.rasterize(p);
-        }
-
-        // let the active mode draw preview
-        currentState.drawPreview();
-
-        panel.repaint();
-    }
-
-
-
     private void initListeners() {
         panel.addMouseListener(new MouseAdapter() {
             @Override public void mousePressed(MouseEvent e) { currentState.onMousePressed(e); }
@@ -120,6 +100,24 @@ public class Controller2D {
 
 
         });
+    }
+
+    public void drawScene() {
+        panel.getRaster().clear();
+
+        // redraw all saved data
+        for (Line l : lines) {
+            lineRasterizer.rasterize(l);
+        }
+
+        for (Polygon p : polygons) {
+            polygonRasterizer.rasterize(p);
+        }
+
+        // let the active mode draw preview
+        currentState.drawPreview();
+
+        panel.repaint();
     }
 
 
