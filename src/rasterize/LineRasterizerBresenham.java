@@ -1,6 +1,7 @@
 package rasterize;
 
 import model.Line;
+import model.Point;
 import raster.RasterBufferedImage;
 
 /**
@@ -14,6 +15,11 @@ public class LineRasterizerBresenham extends LineRasterizer {
     @Override
     public void rasterize(Line line) {
         this.rasterize(line.getX1(), line.getY1(), line.getX2(), line.getY2());
+    }
+
+    @Override
+    public void rasterize(Point point1, Point point2){
+        this.rasterize(point1.getX(), point1.getY(), point2.getX(), point2.getY());
     }
 
     @Override

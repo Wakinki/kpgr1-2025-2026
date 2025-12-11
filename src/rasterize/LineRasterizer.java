@@ -1,6 +1,7 @@
 package rasterize;
 
 import model.Line;
+import model.Point;
 import raster.RasterBufferedImage;
 
 import java.awt.*;
@@ -13,6 +14,10 @@ public abstract class LineRasterizer {
     }
 
     public void rasterize(Line line) {
+
+    }
+
+    public void rasterize(Point point1, Point point2){
 
     }
 

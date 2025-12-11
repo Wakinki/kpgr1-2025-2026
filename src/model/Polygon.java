@@ -1,12 +1,17 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Polygon {
-    private final ArrayList<Point> points;
+    private final List<Point> points;
 
     public Polygon() {
         this.points = new ArrayList<>();
+    }
+
+    public Polygon(List<Point> points) {
+        this.points = points;
     }
 
     public void addPoint(Point p) {
@@ -17,7 +22,14 @@ public class Polygon {
         return points.get(index);
     }
 
+    public Point getLastPoint() {return points.getLast();}
+
     public int getSize() {
         return points.size();
     }
+
+    public List<Point> getPoints() {
+        return points;
+    }
+
 }
