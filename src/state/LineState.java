@@ -27,19 +27,28 @@ public class LineState implements DrawingState {
     @Override
     public void onMouseReleased(MouseEvent e) {
         if (isDrawing) {
-            ctrl.getLines().add(new Line(start, new Point(e.getX(), e.getY())));
+            ctrl.getLines().add(new Line(start, new Point(current.getX(), current.getY())));
         }
+
         isDrawing = false;
         ctrl.drawScene();
     }
 
     @Override
-    public void onMouseMoved(MouseEvent e) {}
+    public void onMouseMoved(MouseEvent e) {
+
+    }
+
 
     @Override
     public void onMouseDragged(MouseEvent e) {
         if (isDrawing) {
+
             current = new Point(e.getX(), e.getY());
+            if (ctrl.isShiftDown()){
+                int[] snapped = ctrl.getSnappedPoint(start.getX(), start.getY(), current.getX(), current.getY());
+                current = new Point(snapped[0], snapped[1]);
+            }
             ctrl.drawScene();
         }
     }

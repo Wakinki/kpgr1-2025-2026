@@ -23,6 +23,7 @@ public class Controller2D {
     private LineRasterizer lineRasterizer;
     private PolygonRasterizer polygonRasterizer;
 
+    private boolean isShiftDown = false;
 
     public Controller2D(Panel panel) {
         this.panel = panel;
@@ -54,35 +55,16 @@ public class Controller2D {
     public PolygonRasterizer getPolygonRasterizer() { return polygonRasterizer; }
     public Panel getPanel() { return panel; }
 
+    public boolean isShiftDown() {
+        return isShiftDown;
+    }
+
     public void setMode(Mode mode) {
         switch (mode) {
             case LINE -> setState(new LineState(this));
             case POLYGON -> setState(currentState = new PolygonState(this));
         }
     }
-
-    /*private void drawScene() {
-        panel.getRaster().clear();
-//      Ukázka zapamatování si seznamu úseček
-//        for(Line line : lines){
-//            lineRasterizer.rasterize(line);
-//        }
-//
-//        if (isDrawingPreview){
-//            lineRasterizer.rasterize(new Line(startX, startY, currentX, currentY));
-//        }
-
-        // 1) Vykreslí polygon, pokud má alespoň 3 body
-        polygonRasterizer.rasterize(polygon);
-
-        // 2) Vykreslí preview úsečku (od posledního bodu k myši)
-        if (isDrawingPreview && polygon.getSize() > 0){
-            Point last = polygon.getLastPoint();
-            lineRasterizer.rasterize(last.getX(), last.getY(), currentX, currentY);
-        }
-
-        panel.repaint();
-    }*/
 
     public void drawScene() {
         panel.getRaster().clear();
@@ -102,104 +84,7 @@ public class Controller2D {
         panel.repaint();
     }
 
-   /* private void initListeners() {
-        panel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-//             Ukázka zapamatování si seznamu úseček
-//                if (!isLineStartSet) {
-//                    startX = e.getX();
-//                    startY = e.getY();
-//                    currentX = startX;
-//                    currentY = startY;
-//                    isLineStartSet = true;
-//                    isDrawingPreview = true;
-//                }else {
-//                    isLineStartSet = false;
-//                    isDrawingPreview = false;
-//                    Line line = new Line(startX, startY, currentX, currentY);
-//                    lines.add(line);
-////                polygon.addPoint(new Point(e.getX(), e.getY()));
-//                    drawScene();
-//                }
 
-                // --- Přidávání bodů do polygonu ---
-                if (polygon.getPoints().isEmpty()) {
-                    // První bod
-                    polygon.addPoint(new Point(e.getX(), e.getY()));
-                    startX = e.getX();
-                    startY = e.getY();
-                    isDrawingPreview = true;
-                } else {
-                    // Přidávání dalších bodů
-                    polygon.addPoint(new Point(currentX, currentY));
-                }
-
-                drawScene();
-            }
-        });
-
-        panel.addMouseMotionListener(new MouseMotionAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent e) {
-
-//                if (isDrawingPreview) {
-//                    currentX = e.getX();
-//                    currentY = e.getY();
-//
-//                    if (isShiftDown) {
-//                        //Aplikace zarovnání
-//                        int[] snapped = getSnappedPoint(startX, startY, currentX, currentY);
-//                        currentX = snapped[0];
-//                        currentY = snapped[1];
-//                    }
-//
-//                    drawScene();
-//                }
-
-                if (isDrawingPreview) {
-                    currentX = e.getX();
-                    currentY = e.getY();
-
-                    if (isShiftDown) {
-                        int[] snapped = getSnappedPoint(
-                                polygon.getLastPoint().getX(),
-                                polygon.getLastPoint().getY(),
-                                currentX,
-                                currentY
-                        );
-                        currentX = snapped[0];
-                        currentY = snapped[1];
-                    }
-
-                    drawScene();
-                }
-            }
-        });
-
-        panel.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_SHIFT -> isShiftDown = true;
-                    case KeyEvent.VK_C -> {
-                        panel.getRaster().clear();
-                        lines.clear();
-                        polygon = new Polygon();
-                        isDrawingPreview = false;
-                        panel.repaint();
-                    }
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_SHIFT)
-                    isShiftDown = false;
-            }
-        });
-
-    }*/
 
     private void initListeners() {
         panel.addMouseListener(new MouseAdapter() {
@@ -216,26 +101,24 @@ public class Controller2D {
             @Override public void keyPressed(KeyEvent e) { currentState.onKeyPressed(e);
 
                 switch (e.getKeyCode()) {
-                    case KeyEvent.VK_L: {
-                        setMode(Mode.LINE);
-                        break;
-                    }
-
-                    case KeyEvent.VK_P: {
-                       setMode(Mode.POLYGON);
-                        break;
-                    }
-
-                    case KeyEvent.VK_C: {
+                    case KeyEvent.VK_L -> setMode(Mode.LINE);
+                    case KeyEvent.VK_P -> setMode(Mode.POLYGON);
+                    case KeyEvent.VK_C -> {
                         lines.clear();
                         polygons.clear();
                         drawScene();
-                        break;
                     }
+                    case KeyEvent.VK_SHIFT -> isShiftDown = true;
                 }
             }
 
-            @Override public void keyReleased(KeyEvent e) { currentState.onKeyReleased(e); }
+            @Override public void keyReleased(KeyEvent e) { currentState.onKeyReleased(e);
+                if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+                    isShiftDown = false;
+                }
+            }
+
+
         });
     }
 
@@ -243,7 +126,7 @@ public class Controller2D {
     /**
      * Spočítá kde má být konečný bod pro funkci zarovnání linky na předem definované úhle
      */
-    private int[] getSnappedPoint(int x1, int y1, int x2, int y2) {
+    public int[] getSnappedPoint(int x1, int y1, int x2, int y2) {
         int dx = x2 - x1;
         int dy = y2 - y1;
 
