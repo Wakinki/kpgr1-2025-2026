@@ -17,9 +17,9 @@ public class PolygonRasterizer {
     public void rasterize(Polygon polygon) {
         // Pokud je méně jak 3 pointy, nevykrelsuju
 
-        if(polygon.getSize() < 3) {
+        /*if(polygon.getSize() < 3) {
             return;
-        }
+        }*/
 
         // cyklus od i = 0 do konce seznamu pointů
         for (int i = 0; i < polygon.getSize(); i++) {

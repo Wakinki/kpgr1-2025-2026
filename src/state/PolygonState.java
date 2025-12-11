@@ -19,7 +19,7 @@ public class PolygonState implements DrawingState {
 
     @Override
     public void onMousePressed(MouseEvent e) {
-        polygon.addPoint(new Point(e.getX(), e.getY()));
+        polygon.addPoint(new Point(previewPoint.getX(), previewPoint.getY()));
         ctrl.getPolygons().add(polygon);
         ctrl.drawScene();
     }
@@ -34,6 +34,10 @@ public class PolygonState implements DrawingState {
     public void drawPreview() {
         if (polygon.getSize() > 0 && previewPoint != null) {
             Point last = polygon.getLastPoint();
+            if (ctrl.isShiftDown()){
+                int[] snapped = ctrl.getSnappedPoint(last.getX(), last.getY(), previewPoint.getX(), previewPoint.getY());
+                previewPoint = new Point(snapped[0], snapped[1]);
+            }
             ctrl.getLineRasterizer().rasterize(last.getX(), last.getY(), previewPoint.getX(), previewPoint.getY());
         }
     }
