@@ -1,17 +1,25 @@
 package state;
 
+import controller.Controller2D;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-public interface DrawingState {
-    void onMousePressed(MouseEvent e);
-    void onMouseReleased(MouseEvent e);
-    void onMouseMoved(MouseEvent e);
-    void onMouseDragged(MouseEvent e);
-    void onKeyPressed(KeyEvent e);
-    void onKeyReleased(KeyEvent e);
+public abstract class DrawingState {
+    protected final Controller2D ctrl;
 
-    void drawPreview();
-    void onEnterState();   // vyčistí preview, resetuje stav
-    void onExitState();    // dodělá co je třeba
+    public DrawingState(Controller2D ctrl) {
+        this.ctrl = ctrl;
+    }
+
+    public void onMousePressed(MouseEvent e){};
+    public void onMouseReleased(MouseEvent e){};
+    public void onMouseMoved(MouseEvent e){};
+    public void onMouseDragged(MouseEvent e){};
+    public void onKeyPressed(KeyEvent e){};
+    public void onKeyReleased(KeyEvent e){};
+
+    public void drawPreview(){};
+    public void onEnterState(){};   // vyčistí preview, resetuje stav
+    public void onExitState(){};    // dodělá co je třeba
 }

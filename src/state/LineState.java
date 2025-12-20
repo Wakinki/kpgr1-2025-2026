@@ -7,14 +7,14 @@ import model.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-public class LineState implements DrawingState {
-    private final Controller2D ctrl;
+public class LineState extends DrawingState {
+
     private boolean isDrawing = false;
     private Point start;
     private Point current;
 
     public LineState(Controller2D ctrl) {
-        this.ctrl = ctrl;
+        super(ctrl);
     }
 
     @Override

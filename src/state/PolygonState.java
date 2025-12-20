@@ -8,13 +8,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 
-public class PolygonState implements DrawingState {
-    private final Controller2D ctrl;
+public class PolygonState extends DrawingState {
+
     private Polygon polygon = new Polygon();
     private Point previewPoint = null;
 
     public PolygonState(Controller2D ctrl) {
-        this.ctrl = ctrl;
+        super(ctrl);
     }
 
     @Override

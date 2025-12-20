@@ -5,6 +5,7 @@ import state.DrawingState;
 import model.Line;
 import model.Polygon;
 import rasterize.*;
+import state.FillState;
 import state.LineState;
 import state.PolygonState;
 import view.Panel;
@@ -63,6 +64,7 @@ public class Controller2D {
         switch (mode) {
             case LINE -> setState(new LineState(this));
             case POLYGON -> setState(currentState = new PolygonState(this));
+            case FILL -> setState(currentState = new FillState(this));
         }
     }
 
@@ -83,6 +85,7 @@ public class Controller2D {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_L -> setMode(Mode.LINE);
                     case KeyEvent.VK_P -> setMode(Mode.POLYGON);
+                    case KeyEvent.VK_F -> setMode(Mode.FILL);
                     case KeyEvent.VK_C -> {
                         lines.clear();
                         polygons.clear();
