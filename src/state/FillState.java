@@ -20,6 +20,7 @@ public class FillState extends DrawingState{
                 e.getX(),
                 e.getY()
         );
+        ctrl.getFills().add(seedFill);
         seedFill.fill();
         ctrl.getPanel().repaint();
 

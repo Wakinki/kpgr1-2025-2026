@@ -1,6 +1,8 @@
 package controller;
 
 
+import fill.Filler;
+import model.Point;
 import state.DrawingState;
 import model.Line;
 import model.Polygon;
@@ -20,6 +22,7 @@ public class Controller2D {
 
     private ArrayList<Line> lines = new ArrayList<>();
     private ArrayList<Polygon> polygons = new ArrayList<>();
+    private ArrayList<Filler> fills = new ArrayList<>();
 
     private LineRasterizer lineRasterizer;
     private PolygonRasterizer polygonRasterizer;
@@ -52,6 +55,9 @@ public class Controller2D {
     }
     public ArrayList<Line> getLines() { return lines; }
     public ArrayList<Polygon> getPolygons() { return polygons; }
+    public ArrayList<Filler> getFills() {
+        return fills;
+    }
     public LineRasterizer getLineRasterizer() { return lineRasterizer; }
     public PolygonRasterizer getPolygonRasterizer() { return polygonRasterizer; }
     public Panel getPanel() { return panel; }
@@ -115,6 +121,10 @@ public class Controller2D {
 
         for (Polygon p : polygons) {
             polygonRasterizer.rasterize(p);
+        }
+
+        for (Filler f : fills) {
+            f.fill();
         }
 
         // let the active mode draw preview
