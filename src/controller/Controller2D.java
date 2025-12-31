@@ -114,7 +114,7 @@ public class Controller2D {
     public void drawScene() {
         panel.getRaster().clear();
 
-        // redraw all saved data
+        // rasterizace uložených dat
         for (Line l : lines) {
             lineRasterizer.rasterize(l);
         }
@@ -127,7 +127,7 @@ public class Controller2D {
             f.fill();
         }
 
-        // let the active mode draw preview
+
         currentState.drawPreview();
 
         panel.repaint();
