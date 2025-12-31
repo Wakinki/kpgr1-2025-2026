@@ -3,13 +3,10 @@ package controller;
 
 import fill.Filler;
 import model.Point;
-import state.DrawingState;
+import state.*;
 import model.Line;
 import model.Polygon;
 import rasterize.*;
-import state.FillState;
-import state.LineState;
-import state.PolygonState;
 import view.Panel;
 
 import java.awt.event.*;
@@ -71,6 +68,7 @@ public class Controller2D {
             case LINE -> setState(new LineState(this));
             case POLYGON -> setState(currentState = new PolygonState(this));
             case FILL -> setState(currentState = new FillState(this));
+            case RECTANGLE -> setState(currentState = new RectangleState(this));
         }
     }
 
@@ -92,6 +90,7 @@ public class Controller2D {
                     case KeyEvent.VK_L -> setMode(Mode.LINE);
                     case KeyEvent.VK_P -> setMode(Mode.POLYGON);
                     case KeyEvent.VK_F -> setMode(Mode.FILL);
+                    case KeyEvent.VK_R -> setMode(Mode.RECTANGLE);
                     case KeyEvent.VK_C -> {
                         lines.clear();
                         polygons.clear();

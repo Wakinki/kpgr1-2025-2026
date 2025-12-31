@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Polygon {
-    private final List<Point> points;
+    protected List<Point> points;
 
     public Polygon() {
         this.points = new ArrayList<>();
@@ -14,7 +14,7 @@ public class Polygon {
         this.points = points;
     }
 
-    public void addPoint(Point p) {
+    public void addPoint(Point p){
         points.add(p);
     }
 
@@ -23,6 +23,8 @@ public class Polygon {
     }
 
     public Point getLastPoint() {return points.getLast();}
+
+    public Point getFirstPoint() {return points.getFirst();}
 
     public int getSize() {
         return points.size();

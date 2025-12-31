@@ -10,8 +10,8 @@ import java.awt.event.MouseEvent;
 
 public class PolygonState extends DrawingState {
 
-    private Polygon polygon = new Polygon();
-    private Point previewPoint = null;
+    protected Polygon polygon = new Polygon();
+    protected Point previewPoint = null;
 
     public PolygonState(Controller2D ctrl) {
         super(ctrl);
