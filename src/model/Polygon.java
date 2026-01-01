@@ -34,4 +34,7 @@ public class Polygon {
         return points;
     }
 
+    public void setPoints(List<Point> points) {
+        this.points = points;
+    }
 }

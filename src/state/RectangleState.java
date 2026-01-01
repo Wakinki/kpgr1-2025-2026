@@ -3,12 +3,15 @@ package state;
 import controller.Controller2D;
 import model.Point;
 import model.Polygon;
+import model.Rectangle;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-public class RectangleState extends PolygonState{
+public class RectangleState extends DrawingState{
 
+    private Rectangle rectangle = new Rectangle();
+    protected Point previewPoint = null;
 
     public RectangleState(Controller2D ctrl) {
         super(ctrl);
@@ -16,55 +19,46 @@ public class RectangleState extends PolygonState{
 
     @Override
     public void onMousePressed(MouseEvent e) {
-
-        switch (polygon.getSize()){
-            case 0: {
-                polygon.addPoint(new Point(previewPoint.getX(), previewPoint.getY()));
-                break;
-            }
-            case 1: {
-                int[] snapped = ctrl.getSnappedPoint(polygon.getFirstPoint().getX(), polygon.getFirstPoint().getY(), previewPoint.getX(), previewPoint.getY());
-                polygon.addPoint(new Point(snapped[0], snapped[1]));
-
-                break;
-            }
-
-            default: {
-                polygon.addPoint(new Point(polygon.getLastPoint().getX(), previewPoint.getY()));
-                polygon.addPoint(new Point(polygon.getFirstPoint().getX(), previewPoint.getY()));
-
-
-                polygon = new Polygon();
-                previewPoint = null;
-            }
+        if(rectangle.getSize() >= 3) {
+            rectangle = new Rectangle();
+            previewPoint = null;
+            ctrl.getPolygons().add(rectangle);
+            ctrl.drawScene();
+            return;
         }
 
+        rectangle.addPoint(new Point(previewPoint.getX(), previewPoint.getY()));
 
-
-
-        ctrl.getPolygons().add(polygon);
+        ctrl.getPolygons().add(rectangle);
         ctrl.drawScene();
     }
 
     @Override
     public void onMouseMoved(MouseEvent e) {
 
-//        if(polygon.getSize() < 3) {
-//
-//        }
-        previewPoint = new Point(e.getX(), e.getY());
+
+            previewPoint = new Point(e.getX(), e.getY());
+
+
         ctrl.drawScene();
     }
 
     @Override
     public void drawPreview() {
-        if (polygon.getSize() > 0 && previewPoint != null) {
-            Point last = polygon.getLastPoint();
-            if (ctrl.isShiftDown()){
-                int[] snapped = ctrl.getSnappedPoint(last.getX(), last.getY(), previewPoint.getX(), previewPoint.getY());
-                previewPoint = new Point(snapped[0], snapped[1]);
-            }
-            ctrl.getLineRasterizer().rasterize(last.getX(), last.getY(), previewPoint.getX(), previewPoint.getY());
+        if(previewPoint == null) {
+            return;
+        }
+        //Vykreslení náhledu základny
+        if (rectangle.getSize() == 1 ) {
+            Point last = rectangle.getLastPoint();
+            int[] snapped = rectangle.getXSnappedPoint(last.getX(), last.getY(), previewPoint.getX(), previewPoint.getY());
+            ctrl.getLineRasterizer().rasterize(last.getX(), last.getY(), snapped[0], snapped[1]);
+        }
+        //Vykreslení náhledu obdelníka
+        if (rectangle.getSize() == 2) {
+            Rectangle previewRectangle = new Rectangle(rectangle);
+            previewRectangle.addPoint(previewPoint);
+            ctrl.getPolygonRasterizer().rasterize(previewRectangle);
         }
     }
 

@@ -10,6 +10,14 @@ public class Rectangle extends Polygon{
         this.points = new ArrayList<>();
     }
 
+    //Kopírovací konstruktor
+    public Rectangle(Rectangle other) {
+        this.points = new ArrayList<>();
+        for (Point p : other.points) {
+            this.points.add(new Point(p.getX(), p.getY()));
+        }
+    }
+
     @Override
     public void addPoint(Point p) {
 
@@ -32,7 +40,6 @@ public class Rectangle extends Polygon{
                 points.add(new Point(points.getFirst().getX(), p.getY()));
                 break;
             }
-
 
         }
 

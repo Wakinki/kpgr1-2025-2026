@@ -94,6 +94,7 @@ public class Controller2D {
                     case KeyEvent.VK_C -> {
                         lines.clear();
                         polygons.clear();
+                        currentState.onExitState();
                         drawScene();
                     }
                     case KeyEvent.VK_SHIFT -> isShiftDown = true;
