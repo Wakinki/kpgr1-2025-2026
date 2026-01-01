@@ -91,12 +91,7 @@ public class Controller2D {
                     case KeyEvent.VK_P -> setMode(Mode.POLYGON);
                     case KeyEvent.VK_F -> setMode(Mode.FILL);
                     case KeyEvent.VK_R -> setMode(Mode.RECTANGLE);
-                    case KeyEvent.VK_C -> {
-                        lines.clear();
-                        polygons.clear();
-                        currentState.onExitState();
-                        drawScene();
-                    }
+                    case KeyEvent.VK_C -> clearScene();
                     case KeyEvent.VK_SHIFT -> isShiftDown = true;
                 }
             }
@@ -109,6 +104,14 @@ public class Controller2D {
 
 
         });
+    }
+
+    public void clearScene() {
+        lines.clear();
+        polygons.clear();
+        fills.clear();
+        currentState.onExitState();
+        drawScene();
     }
 
     public void drawScene() {
@@ -126,7 +129,6 @@ public class Controller2D {
         for (Filler f : fills) {
             f.fill();
         }
-
 
         currentState.drawPreview();
 
