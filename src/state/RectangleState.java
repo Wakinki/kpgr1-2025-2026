@@ -2,7 +2,6 @@ package state;
 
 import controller.Controller2D;
 import model.Point;
-import model.Polygon;
 import model.Rectangle;
 
 import java.awt.event.KeyEvent;
