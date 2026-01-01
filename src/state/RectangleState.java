@@ -36,9 +36,9 @@ public class RectangleState extends DrawingState{
     public void onMouseMoved(MouseEvent e) {
 
 
+        if(rectangle.getSize() < 3) {
             previewPoint = new Point(e.getX(), e.getY());
-
-
+        }
         ctrl.drawScene();
     }
 
@@ -50,8 +50,8 @@ public class RectangleState extends DrawingState{
         //Vykreslení náhledu základny
         if (rectangle.getSize() == 1 ) {
             Point last = rectangle.getLastPoint();
-            int[] snapped = rectangle.getXSnappedPoint(last.getX(), last.getY(), previewPoint.getX(), previewPoint.getY());
-            ctrl.getLineRasterizer().rasterize(last.getX(), last.getY(), snapped[0], snapped[1]);
+            Point snapped = rectangle.getXSnappedPoint(last, previewPoint);
+            ctrl.getLineRasterizer().rasterize(last, snapped);
         }
         //Vykreslení náhledu obdelníka
         if (rectangle.getSize() == 2) {

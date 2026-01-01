@@ -31,8 +31,8 @@ public class Rectangle extends Polygon{
                 break;
             }
             case 1: {
-                int[] snapped = getXSnappedPoint(points.getFirst().getX(), points.getFirst().getY(), p.getX(), p.getY());
-                points.add(new Point(snapped[0], snapped[1]));
+                Point snapped = getXSnappedPoint(points.getFirst(), p);
+                points.add(snapped);
                 break;
             }
             case 2: {
@@ -46,23 +46,14 @@ public class Rectangle extends Polygon{
     }
 
     /**
-     * Spočítá kde má být konečný bod pro funkci zarovnání linky na předem definované úhle
+     * Vrátí bod se souřadnicí X převzatou z druhého bodu
+     * a souřadnicí Y převzatou z prvního bodu.
+     * <br>
+     * Používá se pro vodorovné (X) zarovnání linky – výsledný bod
+     * leží na stejné horizontále jako p1 a ve stejném sloupci jako p2.
      */
-    public int[] getXSnappedPoint(int x1, int y1, int x2, int y2) {
-        int dx = x2 - x1;
-        int dy = y2 - y1;
-
-        double angle = Math.atan2(dy, dx);
-        double distance = Math.sqrt(dx * dx + dy * dy);
-
-        // zaokrouhlení úhlu na nejbližší čtvrtinu PI
-        double snappedAngle = Math.round(angle / (Math.PI)) * (Math.PI);
-
-        // špočítání konečného bodu pomocí zarovnaného úhlu
-        int snappedX = x1 + (int) Math.round(distance * Math.cos(snappedAngle));
-        int snappedY = y1 + (int) Math.round(distance * Math.sin(snappedAngle));
-
-        return new int[]{snappedX, snappedY};
+    public Point getXSnappedPoint(Point p1, Point p2) {
+        return new Point(p2.getX(), p1.getY());
     }
 
 }
