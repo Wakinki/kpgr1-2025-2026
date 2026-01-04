@@ -52,6 +52,7 @@ public class Controller2D {
     }
     public ArrayList<Line> getLines() { return lines; }
     public ArrayList<Polygon> getPolygons() { return polygons; }
+
     public ArrayList<Filler> getFills() {
         return fills;
     }
@@ -66,9 +67,10 @@ public class Controller2D {
     public void setMode(Mode mode) {
         switch (mode) {
             case LINE -> setState(new LineState(this));
-            case POLYGON -> setState(currentState = new PolygonState(this));
-            case FILL -> setState(currentState = new FillState(this));
-            case RECTANGLE -> setState(currentState = new RectangleState(this));
+            case POLYGON -> setState( new PolygonState(this));
+            case FILL -> setState(new FillState(this));
+            case RECTANGLE -> setState( new RectangleState(this));
+            case CLIP -> setState(new ClipState(this));
         }
     }
 
@@ -91,6 +93,7 @@ public class Controller2D {
                     case KeyEvent.VK_P -> setMode(Mode.POLYGON);
                     case KeyEvent.VK_F -> setMode(Mode.FILL);
                     case KeyEvent.VK_R -> setMode(Mode.RECTANGLE);
+                    case KeyEvent.VK_K -> setMode(Mode.CLIP);
                     case KeyEvent.VK_C -> clearScene();
                     case KeyEvent.VK_SHIFT -> isShiftDown = true;
                 }
@@ -107,10 +110,11 @@ public class Controller2D {
     }
 
     public void clearScene() {
+        currentState.onExitState();
         lines.clear();
         polygons.clear();
         fills.clear();
-        currentState.onExitState();
+
         drawScene();
     }
 

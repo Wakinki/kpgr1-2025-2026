@@ -18,6 +18,11 @@ public class RectangleState extends DrawingState{
 
     @Override
     public void onMousePressed(MouseEvent e) {
+        if(rectangle.getSize() > 0 && !ctrl.getPolygons().isEmpty()) {
+            ctrl.getPolygons().removeLast();
+        }
+
+
         if(rectangle.getSize() >= 3) {
             rectangle = new Rectangle();
             previewPoint = null;

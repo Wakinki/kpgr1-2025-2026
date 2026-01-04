@@ -18,6 +18,12 @@ public class Line
         this.y2 = p2.getY();
     }
 
+    public double getLenght() {
+        int dx = x2 - x1;
+        int dy = y2 - y1;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
     public int getX1() {
         return x1;
     }

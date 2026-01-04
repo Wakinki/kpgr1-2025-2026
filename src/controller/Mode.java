@@ -5,4 +5,5 @@ public enum Mode {
     POLYGON,
     FILL,
     RECTANGLE,
+    CLIP,
 }

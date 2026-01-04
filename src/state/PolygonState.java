@@ -19,6 +19,9 @@ public class PolygonState extends DrawingState {
 
     @Override
     public void onMousePressed(MouseEvent e) {
+        if(polygon.getSize() > 0 && !ctrl.getPolygons().isEmpty()) {
+            ctrl.getPolygons().removeLast();
+        }
         polygon.addPoint(new Point(previewPoint.getX(), previewPoint.getY()));
         ctrl.getPolygons().add(polygon);
         ctrl.drawScene();
@@ -45,7 +48,7 @@ public class PolygonState extends DrawingState {
     @Override
     public void onKeyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER && polygon.getSize() >= 3) {
-            ctrl.getPolygons().add(polygon);
+
             polygon = new Polygon();
             previewPoint = null;
             ctrl.drawScene();
