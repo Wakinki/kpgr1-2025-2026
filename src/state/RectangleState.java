@@ -76,4 +76,8 @@ public class RectangleState extends DrawingState{
 //        }
     }
 
+    @Override
+    public void onExitState() {
+        rectangle = new Rectangle();
+    }
 }
