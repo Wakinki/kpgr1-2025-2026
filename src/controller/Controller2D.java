@@ -127,7 +127,11 @@ public class Controller2D {
         }
 
         for (Polygon p : polygons) {
+
             polygonRasterizer.rasterize(p);
+            if(p.getFill() != null) {
+                p.getFill().fill();
+            }
         }
 
         for (Filler f : fills) {

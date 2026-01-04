@@ -1,10 +1,13 @@
 package model;
 
+import fill.Filler;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Polygon {
     protected List<Point> points;
+    protected Filler fill;
 
     public Polygon() {
         this.points = new ArrayList<>();
@@ -12,6 +15,14 @@ public class Polygon {
 
     public Polygon(List<Point> points) {
         this.points = points;
+    }
+
+    public Filler getFill() {
+        return fill;
+    }
+
+    public void setFill(Filler fill) {
+        this.fill = fill;
     }
 
     public void addPoint(Point p){

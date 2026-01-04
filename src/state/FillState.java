@@ -1,6 +1,7 @@
 package state;
 
 import controller.Controller2D;
+import fill.ScanLine;
 import fill.SeedFill;
 
 import java.awt.event.KeyEvent;
@@ -26,33 +27,17 @@ public class FillState extends DrawingState{
 
     }
 
-    @Override
-    public void onMouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void onMouseMoved(MouseEvent e) {
-
-    }
-
-    @Override
-    public void onMouseDragged(MouseEvent e) {
-
-    }
 
     @Override
     public void onKeyPressed(KeyEvent e) {
-
+        if(e.getKeyCode() == KeyEvent.VK_SPACE){
+            ctrl.getPolygons().getLast().setFill(new ScanLine(ctrl.getPanel().getRaster(), ctrl.getPolygons().getLast(), 0x00ff00, ctrl.getPolygonRasterizer()));
+            ctrl.drawScene();
+        }
     }
 
     @Override
     public void onKeyReleased(KeyEvent e) {
-
-    }
-
-    @Override
-    public void drawPreview() {
 
     }
 
